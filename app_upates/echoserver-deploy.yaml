@@ -5,7 +5,7 @@ metadata:
     apptype: echoserver
   name: echoserver
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       apptype: echoserver
@@ -20,5 +20,5 @@ spec:
       - image: gcr.io/google_containers/echoserver:1.4
         name: echoserver
         ports:
-        - containerPort: 80
+        - containerPort: 8080
           protocol: TCP
