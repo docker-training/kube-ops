@@ -1,24 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    apptype: echoserver
   name: echoserver
 spec:
   replicas: 2
   selector:
     matchLabels:
-      apptype: echoserver
+      app: echoserver
   template:
     metadata:
       labels:
-        apptype: echoserver
+        app: echoserver
     spec:
-      nodeSelector:
-        apptype: echoserver
       containers:
-      - image: gcr.io/google_containers/echoserver:1.4
-        name: echoserver
+      - name: echoserver        
+        image: k8s.gcr.io/echoserver:1.4
         ports:
         - containerPort: 8080
           protocol: TCP
