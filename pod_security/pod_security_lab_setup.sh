@@ -25,7 +25,7 @@ rules:
   - "pods"
   - "pods/attach"
   - "pods/log"
-- "pods/exec"
+  - "pods/exec"
   - "pods/proxy"
   - "pods/portforward"
   verbs:  ["*"]
