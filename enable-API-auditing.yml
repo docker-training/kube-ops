@@ -2,8 +2,8 @@
   tasks:
   - name: Copy audit-pod-policy.yaml to /etc/kubernetes
     copy:
-      src: /home/ubuntu/rbac/audit-policy-pod.yaml
-      dest: /etc/kubernetes/audit-policy-pod.yaml
+      src: /home/ubuntu/rbac/audit-pod-policy.yaml
+      dest: /etc/kubernetes/audit-pod-policy.yaml
       owner: root
       group: root
 
@@ -31,7 +31,7 @@
       path: /etc/kubernetes/manifests/kube-apiserver.yaml
       block: |2
           - hostPath:
-              path: /etc/kubernetes/audit-policy-pod.yaml
+              path: /etc/kubernetes/audit-pod-policy.yaml
               type: File
             name: audit-policy
       marker: "# {mark} Adding hostPath params"
