@@ -81,8 +81,11 @@ kubectl certificate approve bob_csr
 kubectl get csr bob_csr -o jsonpath='{.status.certificate}' | base64 -d > bob.crt
 
 # Create Linux user account and copy keys and certs to account
+
+pass=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 14 | head -n 1)
+
 sudo useradd -b /home -m -s /bin/bash -c "I work here" bob
-echo "bob:bob" | sudo chpasswd
+echo "bob:"$pass | sudo chpasswd
 sudo mkdir ~bob/keys && sudo cp -a ~/users/bob/*.{key,crt} ~bob/keys
 sudo chmod 400 ~bob/keys/* && sudo chown -R bob:bob ~bob/keys
 
@@ -109,7 +112,7 @@ echo "Environment Setup Complete"
 echo "User bob created and configured with kubectl privileges"
 echo "---------"
 echo "user: bob"
-echo "pass: bob"
+echo "pass: "$pass
 }
 
 create_env
