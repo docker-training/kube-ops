@@ -5,7 +5,7 @@
   - name: Copy audit-pod-policy.yaml to /etc/kubernetes
     copy:
       src: /home/ubuntu/rbac/audit-pod-policy.yaml
-      dest: /etc/kubernetes/audit-pod-policy.yaml
+      dest: /etc/kubernetes/audit-policy.yaml
       owner: root
       group: root
 
