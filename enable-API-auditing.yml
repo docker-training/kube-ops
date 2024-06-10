@@ -33,7 +33,7 @@
       path: /etc/kubernetes/manifests/kube-apiserver.yaml
       block: |2
           - hostPath:
-              path: /etc/kubernetes/audit-pod-policy.yaml
+              path: /etc/kubernetes/audit-policy.yaml
               type: File
             name: audit-policy
       marker: "# {mark} Adding hostPath params"
