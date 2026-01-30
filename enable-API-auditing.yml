@@ -2,39 +2,38 @@
   become: true
   become_user: root
   tasks:
-  - name: Copy audit-pod-policy.yaml to /etc/kubernetes
-    copy:
-      src: /home/ubuntu/rbac/audit-pod-policy.yaml
-      dest: /etc/kubernetes/audit-policy.yaml
-      owner: root
-      group: root
-
-  - name: Add audit parameters to kube-apiserver.yaml
-    blockinfile:
-      path: /etc/kubernetes/manifests/kube-apiserver.yaml
-      block: |2
+    - name: Copy audit-pod-policy.yaml to /etc/kubernetes
+      copy:
+        src: /home/ubuntu/rbac/audit-pod-policy.yaml
+        dest: /etc/kubernetes/audit-policy.yaml
+        owner: root
+        group: root
+    - name: Add audit parameters to kube-apiserver.yaml
+      blockinfile:
+        path: /etc/kubernetes/manifests/kube-apiserver.yaml
+        block: |2
             - --audit-log-path=-
             - --audit-policy-file=/etc/kubernetes/audit-policy.yaml
-      marker: "# {mark} Adding audit-log params"
-      insertafter: "- kube-apiserver"
+        marker: "# {mark} Adding audit-log params"
+        insertafter: "- kube-apiserver"
 
-  - name: Add volumeMount parameters to kube-apiserver.yaml
-    blockinfile:
-      path: /etc/kubernetes/manifests/kube-apiserver.yaml
-      block: |2
+    - name: Add volumeMount parameters to kube-apiserver.yaml
+      blockinfile:
+        path: /etc/kubernetes/manifests/kube-apiserver.yaml
+        block: |2
             - mountPath: /etc/kubernetes/audit-policy.yaml
               name: audit-policy
               readOnly: true
-      marker: "# {mark} Adding mountPath params"
-      insertafter: "volumeMounts:"
+        marker: "# {mark} Adding mountPath params"
+        insertafter: "volumeMounts:"
 
-  - name: Add volumes parameters to kube-apiserver.yaml
-    blockinfile:
-      path: /etc/kubernetes/manifests/kube-apiserver.yaml
-      block: |2
+    - name: Add volumes parameters to kube-apiserver.yaml
+      blockinfile:
+        path: /etc/kubernetes/manifests/kube-apiserver.yaml
+        block: |2
           - hostPath:
               path: /etc/kubernetes/audit-policy.yaml
               type: File
             name: audit-policy
-      marker: "# {mark} Adding hostPath params"
-      insertafter: "volumes:"
+        marker: "# {mark} Adding hostPath params"
+        insertafter: "volumes:"
